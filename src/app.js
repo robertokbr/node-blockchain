@@ -1,12 +1,13 @@
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const BlockChain = require('./src/blockchain.js');
+const BlockChainClass = require('./models/blockchain.js');
+const BlockchainController = require('./blockchain.controller.js');
 
 class ApplicationServer {
 	constructor() {
 		this.app = express();
-		this.blockchain = new BlockChain.Blockchain();
+		this.blockchain = new BlockChainClass.Blockchain();
 		this.initExpress();
 		this.initExpressMiddleWare();
 		this.initControllers();
@@ -24,7 +25,7 @@ class ApplicationServer {
 	}
 
 	initControllers() {
-    require("./BlockchainController.js")(this.app, this.blockchain);
+    BlockchainController(this.app, this.blockchain);
 	}
 
 	start() {
